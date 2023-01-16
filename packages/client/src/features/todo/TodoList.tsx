@@ -3,7 +3,7 @@ import { List } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import Loading from '@/components/Loading/Loading';
 import Todo from './Todo';
-import { useGetTodosQuery } from './apiSlice';
+import { useGetTodosQuery } from './todoApi';
 import { receivedTodos } from './todoSlice';
 
 const TodoList = () => {

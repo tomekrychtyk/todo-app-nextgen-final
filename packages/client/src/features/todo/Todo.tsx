@@ -23,7 +23,7 @@ import {
   useDeleteTodoMutation,
   useEditTodoMutation,
   useUpdateStatusMutation,
-} from './apiSlice';
+} from './todoApi';
 import styles from './Todo.module.css';
 
 const getStatusBackground = (status: TodoStatus) => {

@@ -3,14 +3,14 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
 import { addTodo, updateId } from '../todo/todoSlice';
-import { useAddNewTodoMutation } from './apiSlice';
+import { useAddNewTodoMutation } from './todoApi';
 import { TodoStatus } from './interfaces';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
-  const [addNewTodo] = useAddNewTodoMutation();
+  const [addNewTodo, response] = useAddNewTodoMutation();
 
   const toggleAdvanced = () => {
     setShowAdvanced(!showAdvanced);
@@ -52,7 +52,6 @@ const AddTodo = () => {
     })
       .unwrap()
       .then((createdTodo) => {
-        console.log('Added successfully', createdTodo);
         setTodoTitle('');
         dispatch(
           updateId({
@@ -78,11 +77,13 @@ const AddTodo = () => {
           onKeyUp={(e) => {
             handleKeyAdd(e);
           }}
+          disabled={response.status === 'pending'}
         />
         <Button
           sx={{ ml: '16px', height: '55px' }}
           variant='contained'
           onClick={handleAdd}
+          disabled={response.status === 'pending'}
         >
           Add todo
         </Button>
