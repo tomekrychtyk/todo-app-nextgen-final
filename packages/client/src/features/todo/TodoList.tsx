@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { List } from '@mui/material';
+import { List, Alert, AlertTitle } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import Loading from '@/components/Loading/Loading';
 import Todo from './Todo';
@@ -22,7 +22,12 @@ const TodoList = () => {
   }
 
   if (isError) {
-    return null;
+    return (
+      <Alert severity='error' sx={{ mt: '8px' }}>
+        <AlertTitle>Error fetching todos</AlertTitle>
+        Please try again or contact the administrator
+      </Alert>
+    );
   }
 
   return (

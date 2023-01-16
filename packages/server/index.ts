@@ -34,7 +34,8 @@ app.patch('/todo', todoRoutes.editTodo);
 app.delete('/todo', todoRoutes.deleteTodo);
 app.patch('/todo/status', todoRoutes.updateStatus);
 
-app.post('/category', categoryRoutes.createNew);
+app.get('/category', categoryRoutes.getCategories);
+app.post('/category', categoryRoutes.createCategory);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -36,7 +36,7 @@ function App() {
           <TodoList />
         </Grid>
         <Grid item xl={3} xs={12}>
-          <ProjectList />
+          {/* <ProjectList /> */}
           <CategoryList />
         </Grid>
         <Grid item xl={1} xs={12} />

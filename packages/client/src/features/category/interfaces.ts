@@ -5,3 +5,7 @@ export interface ICategory {
 export interface ICategoryInput {
   name: string;
 }
+
+export interface ICategoriesState {
+  items: ICategory[];
+}

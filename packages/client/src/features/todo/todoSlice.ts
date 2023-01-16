@@ -62,40 +62,6 @@ const todosSlice = createSlice({
   },
 });
 
-export const getCategoriesSummary = createSelector(
-  (state: RootState) => state,
-  (state) => {
-    const results: { [id: string]: { name: string; counter: number } } = {
-      uncategorized: {
-        name: 'Uncategorized',
-        counter: 0,
-      },
-    };
-
-    for (const todo of state.todos.items) {
-      const category = todo.category;
-
-      if (category) {
-        if (category._id === undefined || category._id === '') {
-          results['uncategorized'].counter++;
-          continue;
-        }
-
-        if (results[category._id] !== undefined) {
-          results[category._id].counter++;
-        } else {
-          results[category._id] = {
-            counter: 1,
-            name: category.name,
-          };
-        }
-      }
-    }
-
-    return results;
-  }
-);
-
 export const {
   receivedTodos,
   addTodo,

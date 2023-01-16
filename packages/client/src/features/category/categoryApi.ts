@@ -13,7 +13,13 @@ export const categoryApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+
+    getCategories: builder.query<ICategory[], void>({
+      query: () => ({
+        url: 'category',
+      }),
+    }),
   }),
 });
 
-export const { useAddNewCategoryMutation } = categoryApi;
+export const { useAddNewCategoryMutation, useGetCategoriesQuery } = categoryApi;
