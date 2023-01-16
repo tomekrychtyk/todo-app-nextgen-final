@@ -63,8 +63,8 @@ const todosSlice = createSlice({
 });
 
 export const getCategoriesSummary = createSelector(
-  (state: RootState) => state.todos.items,
-  (items) => {
+  (state: RootState) => state,
+  (state) => {
     const results: { [id: string]: { name: string; counter: number } } = {
       uncategorized: {
         name: 'Uncategorized',
@@ -72,7 +72,7 @@ export const getCategoriesSummary = createSelector(
       },
     };
 
-    for (const todo of items) {
+    for (const todo of state.todos.items) {
       const category = todo.category;
 
       if (category) {
