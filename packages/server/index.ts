@@ -47,6 +47,24 @@ app.post('/todo', async (req: Request, res: Response) => {
   }
 });
 
+app.patch('/todo', async (req: Request, res: Response) => {
+  const { _id, title } = req.body as { _id: string; title: string };
+
+  try {
+    await Todo.findOneAndUpdate(
+      { _id },
+      {
+        title,
+      }
+    );
+  } catch (error) {
+    console.log('Error updating todo status', error);
+    res.status(500).send(error);
+  }
+
+  res.send('success');
+});
+
 app.delete('/todo', async (req: Request, res: Response) => {
   const { _id } = req.body as { _id: string };
   try {
@@ -56,11 +74,6 @@ app.delete('/todo', async (req: Request, res: Response) => {
     console.log('Error while deleting a todo', error);
     res.status(500).send(error);
   }
-});
-
-app.patch('/todo', async (req: Request, res: Response) => {
-  console.log('WORKING');
-  res.status(200).send('ok');
 });
 
 app.patch('/todo/status', async (req: Request, res: Response) => {

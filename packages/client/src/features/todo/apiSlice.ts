@@ -32,10 +32,10 @@ export const todosApi = createApi({
       }),
     }),
     editTodo: builder.mutation({
-      query: (payload: ITodo) => ({
+      query: ({ _id, title }: { _id: string; title: string }) => ({
         url: 'todo',
         method: 'PATCH',
-        body: { _id: '123' },
+        body: { _id, title },
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },

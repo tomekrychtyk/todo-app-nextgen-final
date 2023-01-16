@@ -109,9 +109,7 @@ const Todo = (props: { data: ITodo }) => {
 
     apiEditTodo({
       _id,
-      title: 'new title',
-      categories: [],
-      status: TodoStatus.inProgress,
+      title: currentlyEditedTitle,
     })
       .then(() => {
         console.log('Successfully edited todo');
