@@ -6,7 +6,7 @@ export type TodoDocument = Document & {
   id: String;
   title: string;
   status: string;
-  categories: CategoryDocument[];
+  category: CategoryDocument[];
   project: ProjectDocument;
 };
 
