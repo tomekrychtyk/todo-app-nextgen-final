@@ -20,12 +20,12 @@ mongoose.connect(
     if (err) {
       console.log(err.message);
     } else {
-      console.log('👍 Successfully connected with the DB');
+      console.log('👍 Successfully connected to the DB');
     }
   }
 );
 
-app.get('/', (req: Request, res: Response) => res.send('hi'));
+app.get('/', (req: Request, res: Response) => res.send('hi there'));
 
 app.get('/todo', async (req: Request, res: Response) => {
   try {
