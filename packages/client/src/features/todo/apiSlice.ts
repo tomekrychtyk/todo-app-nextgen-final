@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ITodo, TodoInput } from './interfaces';
+import { ITodo, TodoInput, TodoStatus } from './interfaces';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -41,6 +41,16 @@ export const todosApi = createApi({
         },
       }),
     }),
+    updateStatus: builder.mutation({
+      query: ({ _id, status }: { _id: string; status: TodoStatus }) => ({
+        url: 'todo/status',
+        method: 'PATCH',
+        body: { _id, status },
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useAddNewTodoMutation,
   useDeleteTodoMutation,
   useEditTodoMutation,
+  useUpdateStatusMutation,
 } = todosApi;

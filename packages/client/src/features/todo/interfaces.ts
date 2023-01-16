@@ -1,9 +1,15 @@
 import { ICategory } from '../category/interfaces';
 
+export enum TodoStatus {
+  toDo = 'TO DO',
+  inProgress = 'IN PROGRESS',
+  done = 'DONE',
+}
+
 export interface ITodo {
   _id: string;
   title: string;
-  status: string;
+  status: TodoStatus;
   categories: ICategory[];
 }
 

@@ -8,17 +8,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-
-const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders:
-    'Access-Control-Allow-Headers,Access-Control-Allow-Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Origin,Cache-Control,Content-Type,X-Token,X-Refresh-Token',
-  credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 const dbUser = process.env.MONGO_USER;
 const dbPassword = process.env.MONGO_PASSWORD;
@@ -71,6 +61,24 @@ app.delete('/todo', async (req: Request, res: Response) => {
 app.patch('/todo', async (req: Request, res: Response) => {
   console.log('WORKING');
   res.status(200).send('ok');
+});
+
+app.patch('/todo/status', async (req: Request, res: Response) => {
+  const { _id, status } = req.body as { _id: string; status: string };
+
+  try {
+    await Todo.findOneAndUpdate(
+      { _id },
+      {
+        status,
+      }
+    );
+  } catch (error) {
+    console.log('Error updating todo status', error);
+    res.status(500).send(error);
+  }
+
+  res.send('success');
 });
 
 // app.get('/find', async (req, res) => {

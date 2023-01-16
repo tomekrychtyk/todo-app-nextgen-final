@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
-import { ITodo, ITodosState } from './interfaces';
+import { ITodo, ITodosState, TodoStatus } from './interfaces';
 
 const initialState: ITodosState = {
   items: [],
@@ -23,6 +23,30 @@ const todosSlice = createSlice({
 
     removeTodo(state, { payload: { _id } }: PayloadAction<{ _id: string }>) {
       state.items = state.items.filter((todo) => todo._id !== _id);
+    },
+
+    editTodo(
+      state,
+      { payload: { _id, title } }: PayloadAction<{ _id: string; title: string }>
+    ) {
+      state.items.forEach((todo) => {
+        if (todo._id === _id) {
+          todo.title = title;
+        }
+      });
+    },
+
+    setStatus(
+      state,
+      {
+        payload: { _id, status },
+      }: PayloadAction<{ _id: string; status: TodoStatus }>
+    ) {
+      state.items.forEach((todo) => {
+        if (todo._id === _id) {
+          todo.status = status;
+        }
+      });
     },
   },
 });
@@ -48,5 +72,6 @@ export const getCategoriesSummary = createSelector(
   }
 );
 
-export const { receivedTodos, addTodo, removeTodo } = todosSlice.actions;
+export const { receivedTodos, addTodo, removeTodo, editTodo, setStatus } =
+  todosSlice.actions;
 export default todosSlice.reducer;

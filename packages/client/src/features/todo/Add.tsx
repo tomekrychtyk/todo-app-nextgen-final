@@ -4,12 +4,13 @@ import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
 import { addTodo } from '../todo/todoSlice';
 import { useAddNewTodoMutation } from './apiSlice';
+import { TodoStatus } from './interfaces';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
-  const [addNewTodo, response] = useAddNewTodoMutation();
+  const [addNewTodo] = useAddNewTodoMutation();
 
   const toggleAdvanced = () => {
     setShowAdvanced(!showAdvanced);
@@ -26,14 +27,14 @@ const AddTodo = () => {
       addTodo({
         title: todoTitle,
         _id: uuid(),
-        status: 'todo',
+        status: TodoStatus.toDo,
         categories: [],
       })
     );
 
     addNewTodo({
       title: todoTitle,
-      status: 'todo',
+      status: TodoStatus.toDo,
       categories: [],
     })
       .unwrap()

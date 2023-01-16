@@ -28,7 +28,7 @@ const Nav = () => {
                     <Typography
                       variant='h5'
                       sx={{
-                        fontSize: '10px',
+                        fontSize: '12px',
                         color: 'orange',
                         paddingLeft: '4px',
                       }}
