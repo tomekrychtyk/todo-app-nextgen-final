@@ -21,7 +21,21 @@ export const todosApi = createApi({
         },
       }),
     }),
+    deleteTodo: builder.mutation({
+      query: (payload: { _id: string }) => ({
+        url: 'todo',
+        method: 'delete',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useAddNewTodoMutation } = todosApi;
+export const {
+  useGetTodosQuery,
+  useAddNewTodoMutation,
+  useDeleteTodoMutation,
+} = todosApi;

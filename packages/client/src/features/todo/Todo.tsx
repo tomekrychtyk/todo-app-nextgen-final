@@ -19,6 +19,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useAppDispatch } from '@/app/hooks';
 import { ITodo } from '../todo/interfaces';
 import { removeTodo } from './todoSlice';
+import { useDeleteTodoMutation } from './apiSlice';
 import styles from './Todo.module.css';
 
 const Todo = (props: { data: ITodo }) => {
@@ -30,6 +31,7 @@ const Todo = (props: { data: ITodo }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
+  const [deleteTodo, response] = useDeleteTodoMutation();
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -51,6 +53,14 @@ const Todo = (props: { data: ITodo }) => {
         _id,
       })
     );
+
+    deleteTodo({ _id })
+      .then(() => {
+        console.log('Success');
+      })
+      .then((error) => {
+        console.log(error);
+      });
   };
 
   return (

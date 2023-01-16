@@ -37,7 +37,6 @@ app.get('/todo', async (req: Request, res: Response) => {
 });
 
 app.post('/todo', async (req: Request, res: Response) => {
-  console.log(req.body);
   const todo = new Todo(req.body as typeof Todo);
   try {
     await todo.save();
@@ -48,16 +47,22 @@ app.post('/todo', async (req: Request, res: Response) => {
   }
 });
 
+app.delete('/todo', async (req: Request, res: Response) => {
+  const { _id } = req.body as { _id: string };
+  try {
+    const todo = await Todo.deleteOne({ _id });
+    res.send(JSON.stringify('success'));
+  } catch (error) {
+    console.log('Error while deleting a todo', error);
+    res.status(500).send(error);
+  }
+});
+
 // app.get('/find', async (req, res) => {
 //   const todo = await Todo.findById('63c2251e40e0ea5959bf245e');
 //   console.log(todo);
 
 //   res.send('success');
-// });
-
-// app.get('/delete', async (req, res) => {
-//   //   const todo = await Todo.deleteOne({ id: '63c22585693e7c95178bbb6c' });
-//   //   console.log(todo);
 // });
 
 // app.get('/add', async (req, res) => {
