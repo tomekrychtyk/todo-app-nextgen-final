@@ -1,0 +1,16 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "./packages/client",
+    "./packages/server"
+  ],
+  "scripts": {
+    "start:client": "yarn workspace client run dev",
+    "start:server": "yarn workspace server run dev",
+    "start:db": "yarn workspace server run start:db"
+  }
+}
