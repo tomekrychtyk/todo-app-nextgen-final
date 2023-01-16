@@ -2,7 +2,7 @@
   background-color: rgb(56, 56, 56);
   box-shadow: 3px 5px 3px rgba(5, 5, 5, 0.75);
   border-radius: 10px;
-  border-left: 10px solid yellowgreen;
+  border-left: 10px solid rgba(0, 0, 0, 0);
   margin-bottom: 16px;
 }
 

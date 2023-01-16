@@ -81,36 +81,6 @@ app.patch('/todo/status', async (req: Request, res: Response) => {
   res.send('success');
 });
 
-// app.get('/find', async (req, res) => {
-//   const todo = await Todo.findById('63c2251e40e0ea5959bf245e');
-//   console.log(todo);
-
-//   res.send('success');//
-// });
-
-// app.get('/add', async (req, res) => {
-//   const result = await Todo.create({
-//     title: 'siema 2',
-//     status: 'done',
-//     categories: [
-//       {
-//         id: 'abc',
-//         name: 'Web Development',
-//       },
-//       {
-//         id: 'hhh',
-//         name: 'Important',
-//       },
-//     ],
-//     project: {
-//       id: 'react-adv',
-//       name: 'Learn react hooks',
-//     },
-//   });
-//   console.log(result);
-//   res.send('success');
-// });
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('App is running on port:' + port);

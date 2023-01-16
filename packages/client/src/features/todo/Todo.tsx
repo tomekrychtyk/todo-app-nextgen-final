@@ -135,7 +135,10 @@ const Todo = (props: { data: ITodo }) => {
   };
 
   return (
-    <ListItem className={styles.todoContainer}>
+    <ListItem
+      className={styles.todoContainer}
+      style={{ borderLeftColor: getStatusBackground(status) }}
+    >
       {currentlyEdited ? (
         <>
           <TextField
