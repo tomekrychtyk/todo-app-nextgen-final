@@ -75,7 +75,7 @@ const AddTodo = () => {
           variant='contained'
           onClick={handleAdd}
         >
-          Add
+          Add todo
         </Button>
       </Box>
       <Box>
