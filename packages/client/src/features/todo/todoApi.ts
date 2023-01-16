@@ -1,17 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ITodo, TodoInput, TodoStatus } from './interfaces';
+import { apiSlice } from '@/app/api';
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
-export const todosApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
+export const todosApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTodos: builder.query<ITodo[], void>({
       query: () => ({
         url: 'todo',
       }),
     }),
-    addNewTodo: builder.mutation({
+    addNewTodo: builder.mutation<ITodo, TodoInput>({
       query: (payload: TodoInput) => ({
         url: 'todo',
         method: 'POST',
@@ -21,7 +18,7 @@ export const todosApi = createApi({
         },
       }),
     }),
-    deleteTodo: builder.mutation({
+    deleteTodo: builder.mutation<ITodo, { _id: string }>({
       query: (payload: { _id: string }) => ({
         url: 'todo',
         method: 'DELETE',
@@ -31,7 +28,7 @@ export const todosApi = createApi({
         },
       }),
     }),
-    editTodo: builder.mutation({
+    editTodo: builder.mutation<ITodo, { _id: string; title: string }>({
       query: ({ _id, title }: { _id: string; title: string }) => ({
         url: 'todo',
         method: 'PATCH',
@@ -41,7 +38,7 @@ export const todosApi = createApi({
         },
       }),
     }),
-    updateStatus: builder.mutation({
+    updateStatus: builder.mutation<ITodo, { _id: string; status: string }>({
       query: ({ _id, status }: { _id: string; status: TodoStatus }) => ({
         url: 'todo/status',
         method: 'PATCH',

@@ -60,7 +60,7 @@ const AddTodo = () => {
           })
         );
       })
-      .then((error) => {
+      .catch((error) => {
         console.log(error);
       });
   };
