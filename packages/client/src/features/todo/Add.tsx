@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
-import { addTodo } from '../todo/todoSlice';
+import { addTodo, updateId } from '../todo/todoSlice';
 import { useAddNewTodoMutation } from './apiSlice';
 import { TodoStatus } from './interfaces';
 
@@ -23,24 +23,37 @@ const AddTodo = () => {
   };
 
   const handleAdd = () => {
+    const tmpId = uuid();
     dispatch(
       addTodo({
         title: todoTitle,
-        _id: uuid(),
+        _id: tmpId,
         status: TodoStatus.toDo,
-        categories: [],
+        category: {
+          _id: '',
+          name: '',
+        },
       })
     );
 
     addNewTodo({
       title: todoTitle,
       status: TodoStatus.toDo,
-      categories: [],
+      category: {
+        _id: '',
+        name: '',
+      },
     })
       .unwrap()
-      .then(() => {
-        console.log('Added successfully');
+      .then((createdTodo) => {
+        console.log('Added successfully', createdTodo);
         setTodoTitle('');
+        dispatch(
+          updateId({
+            _id: createdTodo._id,
+            tmpId,
+          })
+        );
       })
       .then((error) => {
         console.log(error);

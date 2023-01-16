@@ -39,8 +39,8 @@ app.get('/todo', async (req: Request, res: Response) => {
 app.post('/todo', async (req: Request, res: Response) => {
   const todo = new Todo(req.body as typeof Todo);
   try {
-    await todo.save();
-    res.send(JSON.stringify('success'));
+    const result = await todo.save();
+    res.send(JSON.stringify(todo));
   } catch (error) {
     console.log('Error while saving a todo', error);
     res.status(500).send(error);

@@ -10,7 +10,7 @@ export interface ITodo {
   _id: string;
   title: string;
   status: TodoStatus;
-  categories: ICategory[];
+  category: ICategory;
 }
 
 export type TodoInput = Omit<ITodo, '_id'>;

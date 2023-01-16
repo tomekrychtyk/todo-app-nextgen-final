@@ -1,4 +1,5 @@
-import { Card, CardContent, Paper, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Button, Card, CardContent, Paper, Typography } from '@mui/material';
 import { useAppSelector } from '@/app/hooks';
 import { getCategoriesSummary } from '../todo/todoSlice';
 
@@ -20,6 +21,7 @@ const CategoryList = () => {
               );
             })}
           </ul>
+          <Button variant='outlined'>Add new category</Button>
         </CardContent>
       </Card>
     </Paper>

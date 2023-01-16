@@ -16,9 +16,9 @@ const todosSlice = createSlice({
 
     addTodo(
       state,
-      { payload: { _id, title, status, categories } }: PayloadAction<ITodo>
+      { payload: { _id, title, status, category } }: PayloadAction<ITodo>
     ) {
-      state.items = [...state.items, { _id, title, status, categories }];
+      state.items = [...state.items, { _id, title, status, category }];
     },
 
     removeTodo(state, { payload: { _id } }: PayloadAction<{ _id: string }>) {
@@ -32,6 +32,17 @@ const todosSlice = createSlice({
       state.items.forEach((todo) => {
         if (todo._id === _id) {
           todo.title = title;
+        }
+      });
+    },
+
+    updateId(
+      state,
+      { payload: { _id, tmpId } }: PayloadAction<{ _id: string; tmpId: string }>
+    ) {
+      state.items.forEach((todo) => {
+        if (todo._id === tmpId) {
+          todo._id = _id;
         }
       });
     },
@@ -55,23 +66,32 @@ export const getCategoriesSummary = createSelector(
   (state: RootState) => state.todos.items,
   (items) => {
     const results: { [id: string]: { name: string; counter: number } } = {};
-    for (const todo of items) {
-      for (const cat of todo.categories) {
-        if (results[cat.id]) {
-          results[cat.id].counter++;
-        } else {
-          results[cat.id] = {
-            name: cat.name,
-            counter: 1,
-          };
-        }
-      }
-    }
+
+    console.log(items);
+
+    // for (const todo of items) {
+    //   for (const cat of todo.categories) {
+    //     if (results[cat.id]) {
+    //       results[cat.id].counter++;
+    //     } else {
+    //       results[cat.id] = {
+    //         name: cat.name,
+    //         counter: 1,
+    //       };
+    //     }
+    //   }
+    // }
 
     return results;
   }
 );
 
-export const { receivedTodos, addTodo, removeTodo, editTodo, setStatus } =
-  todosSlice.actions;
+export const {
+  receivedTodos,
+  addTodo,
+  removeTodo,
+  editTodo,
+  setStatus,
+  updateId,
+} = todosSlice.actions;
 export default todosSlice.reducer;
