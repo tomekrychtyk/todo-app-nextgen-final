@@ -62,7 +62,7 @@ app.delete('/todo', async (req: Request, res: Response) => {
 //   const todo = await Todo.findById('63c2251e40e0ea5959bf245e');
 //   console.log(todo);
 
-//   res.send('success');
+//   res.send('success');//
 // });
 
 // app.get('/add', async (req, res) => {
