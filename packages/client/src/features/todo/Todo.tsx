@@ -57,7 +57,7 @@ const getAvailableStatuses = (currentStatus: TodoStatus) => {
 
 const Todo = (props: { data: ITodo }) => {
   const {
-    data: { _id, title, status },
+    data: { _id, title, status, category },
   } = props;
 
   const dispatch = useAppDispatch();
@@ -187,7 +187,7 @@ const Todo = (props: { data: ITodo }) => {
               pl: '16px',
             }}
           >
-            <Typography>Web Development</Typography>
+            <Typography>{category.name || 'Uncategorized'}</Typography>
           </Box>
           <Box
             sx={{

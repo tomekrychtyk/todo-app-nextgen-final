@@ -1,5 +1,4 @@
-import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
-import { RootState } from '@/app/store';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ITodo, ITodosState, TodoStatus } from './interfaces';
 
 const initialState: ITodosState = {

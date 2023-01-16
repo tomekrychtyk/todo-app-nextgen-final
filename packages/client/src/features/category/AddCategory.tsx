@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Button, TextField, Box } from '@mui/material';
+import { useAppDispatch } from '@/app/hooks';
 import { useAddNewCategoryMutation } from './categoryApi';
+import { addCategory, updateId } from './categorySlice';
 
 const AddCategory = () => {
+  const dispatch = useAppDispatch();
   const [addInProgress, setAddInProgress] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [apiAddCategory] = useAddNewCategoryMutation();
@@ -14,13 +17,35 @@ const AddCategory = () => {
     setNewCategoryName(e.target.value);
   };
 
+  const handleKeyboardAdd = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      handleNewCategorySave();
+    }
+  };
+
   const handleNewCategorySave = () => {
     const tmpId = uuid();
+
+    dispatch(
+      addCategory({
+        _id: tmpId,
+        name: newCategoryName,
+      })
+    );
 
     apiAddCategory({ name: newCategoryName })
       .unwrap()
       .then((createdCategory) => {
         console.log('added', createdCategory);
+        setAddInProgress(false);
+        setNewCategoryName('');
+
+        dispatch(
+          updateId({
+            tmpId,
+            _id: createdCategory._id,
+          })
+        );
       })
       .catch((error) => {
         console.log('Error saving new category', error);
@@ -36,7 +61,11 @@ const AddCategory = () => {
               value={newCategoryName}
               placeholder='Category name'
               sx={{ width: '90%' }}
+              autoFocus
               onChange={handleSetCategoryName}
+              onKeyUp={(e) => {
+                handleKeyboardAdd(e);
+              }}
             />
           </Box>
           <Button

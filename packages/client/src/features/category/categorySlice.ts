@@ -13,6 +13,21 @@ const categorySlice = createSlice({
     receivedCategories(state, action: PayloadAction<ICategory[]>) {
       state.items = action.payload;
     },
+
+    addCategory(state, { payload: { _id, name } }: PayloadAction<ICategory>) {
+      state.items = [...state.items, { _id, name }];
+    },
+
+    updateId(
+      state,
+      { payload: { _id, tmpId } }: PayloadAction<{ _id: string; tmpId: string }>
+    ) {
+      state.items.forEach((category) => {
+        if (category._id === tmpId) {
+          category._id = _id;
+        }
+      });
+    },
   },
 });
 
@@ -56,5 +71,6 @@ export const getCategoriesSummary = createSelector(
   }
 );
 
-export const { receivedCategories } = categorySlice.actions;
+export const { receivedCategories, addCategory, updateId } =
+  categorySlice.actions;
 export default categorySlice.reducer;
