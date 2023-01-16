@@ -75,7 +75,7 @@ export const getCategoriesSummary = createSelector(
     for (const todo of items) {
       const category = todo.category;
 
-      if (category._id === undefined) {
+      if (category._id === undefined || category._id === '') {
         results['uncategorized'].counter++;
         continue;
       }

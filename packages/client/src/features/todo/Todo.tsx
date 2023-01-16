@@ -128,8 +128,17 @@ const Todo = (props: { data: ITodo }) => {
         console.log('Status updated');
       })
       .catch((error) => {
-        console.log('Error updating status');
+        console.log('Error updating status: ', error);
       });
+  };
+
+  const handleKeyboardEdit = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    _id: string
+  ) => {
+    if (e.key === 'Enter') {
+      handleEdit(_id);
+    }
   };
 
   return (
@@ -144,6 +153,7 @@ const Todo = (props: { data: ITodo }) => {
             onChange={(e) => setCurrentlyEditedTitle(e.target.value)}
             sx={{ width: '100%' }}
             autoFocus
+            onKeyDown={(e) => handleKeyboardEdit(e, _id)}
           />
           <Box className={styles.iconsContainer}>
             <IconButton

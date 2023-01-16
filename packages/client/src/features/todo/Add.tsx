@@ -22,6 +22,12 @@ const AddTodo = () => {
     setTodoTitle(e.target.value);
   };
 
+  const handleKeyAdd = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      handleAdd();
+    }
+  };
+
   const handleAdd = () => {
     const tmpId = uuid();
     dispatch(
@@ -69,6 +75,9 @@ const AddTodo = () => {
           autoComplete='off'
           value={todoTitle}
           onChange={handleChange}
+          onKeyUp={(e) => {
+            handleKeyAdd(e);
+          }}
         />
         <Button
           sx={{ ml: '16px', height: '55px' }}
