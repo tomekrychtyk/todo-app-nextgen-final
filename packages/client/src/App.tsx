@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TodoList from './features/todo/TodoList';
 import ProjectList from './features/project/ProjectList';
 import CategoryList from './features/category/CategoryList';
-import AddTodo from './features/todo/Add';
+import AddTodo from './features/todo/AddTodo';
 
 import Nav from './components/Nav/Nav';
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
-import { addTodo, updateId } from '../todo/todoSlice';
+import { addTodo, updateId } from './todoSlice';
 import { useAddNewTodoMutation } from './todoApi';
 import { TodoStatus } from './interfaces';
 
