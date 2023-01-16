@@ -4,14 +4,12 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import Loading from '@/components/Loading/Loading';
 import Todo from './Todo';
 import { useGetTodosQuery } from './apiSlice';
-import { receivedTodos, getCategoriesSummary } from './todoSlice';
+import { receivedTodos } from './todoSlice';
 
 const TodoList = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading, isUninitialized, isError, error } =
-    useGetTodosQuery();
+  const { data, isLoading, isUninitialized, isError } = useGetTodosQuery();
   const todos = useAppSelector((state) => state.todos.items);
-  const items = useAppSelector(getCategoriesSummary);
 
   useEffect(() => {
     if (data) {

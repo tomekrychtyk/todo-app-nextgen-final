@@ -31,6 +31,16 @@ export const todosApi = createApi({
         },
       }),
     }),
+    editTodo: builder.mutation({
+      query: (payload: ITodo) => ({
+        url: 'todo',
+        method: 'patch',
+        body: { _id: '123' },
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
@@ -38,4 +48,5 @@ export const {
   useGetTodosQuery,
   useAddNewTodoMutation,
   useDeleteTodoMutation,
+  useEditTodoMutation,
 } = todosApi;

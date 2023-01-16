@@ -19,7 +19,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useAppDispatch } from '@/app/hooks';
 import { ITodo } from '../todo/interfaces';
 import { removeTodo } from './todoSlice';
-import { useDeleteTodoMutation } from './apiSlice';
+import { useDeleteTodoMutation, useEditTodoMutation } from './apiSlice';
 import styles from './Todo.module.css';
 
 const Todo = (props: { data: ITodo }) => {
@@ -31,7 +31,9 @@ const Todo = (props: { data: ITodo }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
-  const [deleteTodo, response] = useDeleteTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [editTodo] = useEditTodoMutation();
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -58,8 +60,23 @@ const Todo = (props: { data: ITodo }) => {
       .then(() => {
         console.log('Success');
       })
-      .then((error) => {
+      .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const handleEdit = (_id: string) => {
+    editTodo({
+      _id,
+      title: 'new title',
+      categories: [],
+      status: 'In Progress',
+    })
+      .then(() => {
+        console.log('Successfully edited todo');
+      })
+      .catch((error) => {
+        console.log('error editing todo', error);
       });
   };
 
@@ -84,9 +101,7 @@ const Todo = (props: { data: ITodo }) => {
             <IconButton
               edge='end'
               aria-label='edit'
-              onClick={() =>
-                console.log('handle save actipon', currentlyEdited)
-              }
+              onClick={() => handleEdit(_id)}
             >
               <CheckCircleIcon sx={{ color: 'yellowgreen' }} />
             </IconButton>

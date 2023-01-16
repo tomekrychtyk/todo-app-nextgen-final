@@ -8,7 +8,17 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders:
+    'Access-Control-Allow-Headers,Access-Control-Allow-Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Origin,Cache-Control,Content-Type,X-Token,X-Refresh-Token',
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 const dbUser = process.env.MONGO_USER;
 const dbPassword = process.env.MONGO_PASSWORD;
@@ -56,6 +66,11 @@ app.delete('/todo', async (req: Request, res: Response) => {
     console.log('Error while deleting a todo', error);
     res.status(500).send(error);
   }
+});
+
+app.patch('/todo', async (req: Request, res: Response) => {
+  console.log('WORKING');
+  res.status(200).send('ok');
 });
 
 // app.get('/find', async (req, res) => {
