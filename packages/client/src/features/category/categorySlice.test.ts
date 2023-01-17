@@ -58,6 +58,7 @@ describe('selectors', () => {
         selectedFilter: '',
       };
       const todosState: ITodosState = {
+        selectedStatus: '',
         items: [],
       };
 
@@ -85,6 +86,7 @@ describe('selectors', () => {
         selectedFilter: '',
       };
       const todosState: ITodosState = {
+        selectedStatus: '',
         items: [
           {
             _id: 't1',
@@ -140,6 +142,7 @@ describe('selectors', () => {
       };
       const todosState: ITodosState = {
         items: [],
+        selectedStatus: '',
       };
 
       const input = {
@@ -162,6 +165,7 @@ describe('selectors', () => {
         selectedFilter: '',
       };
       const todosState: ITodosState = {
+        selectedStatus: '',
         items: [],
       };
 
