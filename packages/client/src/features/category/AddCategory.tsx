@@ -7,6 +7,7 @@ import { addCategory, updateId } from './categorySlice';
 
 const AddCategory = () => {
   const dispatch = useAppDispatch();
+  const [hasFormError, setHasFormError] = useState(false);
   const [addInProgress, setAddInProgress] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [apiAddCategory] = useAddNewCategoryMutation();
@@ -24,6 +25,13 @@ const AddCategory = () => {
   };
 
   const handleNewCategorySave = () => {
+    setHasFormError(false);
+
+    if (!newCategoryName) {
+      setHasFormError(true);
+      return;
+    }
+
     const tmpId = uuid();
 
     dispatch(
@@ -66,6 +74,8 @@ const AddCategory = () => {
               onKeyUp={(e) => {
                 handleKeyboardAdd(e);
               }}
+              error={hasFormError}
+              helperText={hasFormError ? 'Category name is required' : ''}
             />
           </Box>
           <Button

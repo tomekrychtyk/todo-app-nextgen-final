@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  SelectChangeEvent,
-} from '@mui/material';
+import { TextField, Button, Box, Typography } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
 import { addTodo, updateId } from './todoSlice';
@@ -16,6 +10,7 @@ import { ICategory } from '../category/interfaces';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
+  const [hasFormError, setHasFormError] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<null | ICategory>(
@@ -44,6 +39,13 @@ const AddTodo = () => {
   };
 
   const handleAdd = () => {
+    setHasFormError(false);
+
+    if (!todoTitle) {
+      setHasFormError(true);
+      return;
+    }
+
     const tmpId = uuid();
     const category = selectedCategory || {
       _id: '',
@@ -58,8 +60,6 @@ const AddTodo = () => {
         category,
       })
     );
-
-    console.log(category);
 
     addNewTodo({
       title: todoTitle,
@@ -92,6 +92,10 @@ const AddTodo = () => {
               md: '85%',
             },
           }}
+          helperText={
+            hasFormError ? 'You need to specify what you plan to do' : ''
+          }
+          error={hasFormError}
           autoComplete='off'
           value={todoTitle}
           onChange={handleChange}
