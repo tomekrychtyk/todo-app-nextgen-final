@@ -24,7 +24,7 @@ The app created for a recruitment process purpose.
 
 ## Extra requirements
 - [x] Support for todo statuses
-- [ ] Suppport for status filtering
+- [x] Suppport for status filtering
 - [x] Support for status editing
 - [x] Support for todo categorization
 - [x] User should be able to manually add their own categories
