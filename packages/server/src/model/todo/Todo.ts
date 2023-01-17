@@ -19,7 +19,7 @@ export const todoSchema = new Schema(
     status: {
       type: Schema.Types.String,
     },
-    category: { name: String, id: String },
+    category: { name: String, _id: String },
     project: {
       name: String,
       id: String,

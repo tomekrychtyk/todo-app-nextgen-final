@@ -42,7 +42,7 @@ export const editTodo = async (req: Request, res: Response) => {
 export const deleteTodo = async (req: Request, res: Response) => {
   const { _id } = req.body as { _id: string };
   try {
-    const todo = await Todo.deleteOne({ _id });
+    await Todo.deleteOne({ _id });
     res.send(JSON.stringify('success'));
   } catch (error) {
     console.log('Error while deleting a todo', error);

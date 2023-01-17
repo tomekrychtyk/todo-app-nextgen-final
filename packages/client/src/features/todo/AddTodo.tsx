@@ -1,15 +1,26 @@
 import { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  SelectChangeEvent,
+} from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import { useAppDispatch } from '@/app/hooks';
 import { addTodo, updateId } from './todoSlice';
 import { useAddNewTodoMutation } from './todoApi';
 import { TodoStatus } from './interfaces';
+import AddAdvancedOptions from './AddAdvancedOptions';
+import { ICategory } from '../category/interfaces';
 
 const AddTodo = () => {
   const dispatch = useAppDispatch();
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [todoTitle, setTodoTitle] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<null | ICategory>(
+    null
+  );
   const [addNewTodo, response] = useAddNewTodoMutation();
 
   const toggleAdvanced = () => {
@@ -28,27 +39,32 @@ const AddTodo = () => {
     }
   };
 
+  const handleCategorySelect = (category: { _id: string; name: string }) => {
+    setSelectedCategory(category);
+  };
+
   const handleAdd = () => {
     const tmpId = uuid();
+    const category = selectedCategory || {
+      _id: '',
+      name: '',
+    };
+
     dispatch(
       addTodo({
         title: todoTitle,
         _id: tmpId,
         status: TodoStatus.toDo,
-        category: {
-          _id: '',
-          name: '',
-        },
+        category,
       })
     );
+
+    console.log(category);
 
     addNewTodo({
       title: todoTitle,
       status: TodoStatus.toDo,
-      category: {
-        _id: '',
-        name: '',
-      },
+      category,
     })
       .unwrap()
       .then((createdTodo) => {
@@ -85,7 +101,7 @@ const AddTodo = () => {
           onClick={handleAdd}
           disabled={response.status === 'pending'}
         >
-          Add todo
+          Add
         </Button>
       </Box>
       <Box>
@@ -97,7 +113,12 @@ const AddTodo = () => {
           )}
         </Button>
       </Box>
-      {showAdvanced ? <Box>Advanced</Box> : null}
+      {showAdvanced ? (
+        <AddAdvancedOptions
+          selectedCategory={selectedCategory}
+          onCategorySelect={handleCategorySelect}
+        />
+      ) : null}
     </>
   );
 };
