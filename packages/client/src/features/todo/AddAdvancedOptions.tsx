@@ -19,6 +19,11 @@ const AddAdvancedOptions = ({ onCategorySelect, selectedCategory }: Props) => {
     const category = categories.find((item) => item._id === e.target.value);
     if (category) {
       onCategorySelect(category);
+    } else {
+      onCategorySelect({
+        _id: '',
+        name: '',
+      });
     }
   };
 
