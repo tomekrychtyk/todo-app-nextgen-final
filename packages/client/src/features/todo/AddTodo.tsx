@@ -90,7 +90,7 @@ const AddTodo = () => {
           sx={{
             width: {
               xs: '65%',
-              md: '80%',
+              md: '85%',
             },
           }}
           autoComplete='off'
