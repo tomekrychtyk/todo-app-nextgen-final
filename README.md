@@ -24,14 +24,14 @@ The app created for a recruitment process purpose.
 
 ## Extra requirements
 - [x] Support for todo statuses
-- [] Suppport for status filtering
+- [ ] Suppport for status filtering
 - [x] Support for status editing
 - [x] Support for todo categorization
 - [x] User should be able to manually add their own categories
-- [] User should be able to edit categories
-- [] User should be able to delete a category
+- [ ] User should be able to edit categories
+- [ ] User should be able to delete a category
 - [x] Support for category filtering
-- [] Support for changing category already assigned to a todo
+- [ ] Support for changing category already assigned to a todo
 
 ## Running the app
 
