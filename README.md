@@ -30,6 +30,7 @@ The app created for a recruitment process purpose.
 - [x] User should be able to manually add their own categories
 - [ ] User should be able to edit categories
 - [ ] User should be able to delete a category
+- [ ] When a user deletes a category all todos assigned to it become 'Uncategorized'
 - [x] Support for category filtering
 - [ ] Support for changing category already assigned to a todo
 
