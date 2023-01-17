@@ -35,7 +35,7 @@ The app created for a recruitment process purpose.
 
 ## Running the app
 
-The application is consisted of two service `client` and `server`.
+The application is consisted of two services `client` and `server`.
 To run it locally you'll need to create a `.env` file for both packages.
 
 The client `.env` expects one env variable:
