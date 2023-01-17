@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useAppDispatch } from '@/app/hooks';
+import { getStatusBackground } from '@/utils/todo';
 import { ITodo, TodoStatus } from '../todo/interfaces';
 import { removeTodo, editTodo, setStatus } from './todoSlice';
 import {
@@ -25,22 +26,6 @@ import {
   useUpdateStatusMutation,
 } from './todoApi';
 import styles from './Todo.module.css';
-
-const getStatusBackground = (status: TodoStatus) => {
-  switch (status) {
-    case TodoStatus.toDo: {
-      return 'gray';
-    }
-
-    case TodoStatus.inProgress: {
-      return 'blueviolet';
-    }
-
-    case TodoStatus.done: {
-      return 'yellowgreen';
-    }
-  }
-};
 
 const getAvailableStatuses = (currentStatus: TodoStatus) => {
   const statuses = [TodoStatus.toDo, TodoStatus.inProgress, TodoStatus.done];

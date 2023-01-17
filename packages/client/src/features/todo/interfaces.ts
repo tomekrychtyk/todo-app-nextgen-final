@@ -17,4 +17,5 @@ export type TodoInput = Omit<ITodo, '_id'>;
 
 export interface ITodosState {
   items: ITodo[];
+  selectedStatus: string;
 }

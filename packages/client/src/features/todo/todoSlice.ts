@@ -3,6 +3,7 @@ import { ITodo, ITodosState, TodoStatus } from './interfaces';
 
 const initialState: ITodosState = {
   items: [],
+  selectedStatus: '',
 };
 
 const todosSlice = createSlice({
@@ -58,6 +59,15 @@ const todosSlice = createSlice({
         }
       });
     },
+
+    setSelectedStatusFilter(
+      state,
+      { payload }: PayloadAction<{ status: string | undefined }>
+    ) {
+      if (payload.status !== undefined) {
+        state.selectedStatus = payload.status;
+      }
+    },
   },
 });
 
@@ -68,5 +78,6 @@ export const {
   editTodo,
   setStatus,
   updateId,
+  setSelectedStatusFilter,
 } = todosSlice.actions;
 export default todosSlice.reducer;
