@@ -86,7 +86,6 @@ const AddTodo = () => {
       <Box>
         <TextField
           placeholder="Let's do something today..."
-          //sx={{ width: '80%' }}
           sx={{
             width: {
               xs: '65%',
