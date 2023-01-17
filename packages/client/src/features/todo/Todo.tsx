@@ -178,8 +178,18 @@ const Todo = (props: { data: ITodo }) => {
             onClick={() => {
               setCurrentlyEdited(_id);
             }}
-            primary={title}
-            secondary='PROJECT NAME'
+            primary={
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    md: '16px',
+                  },
+                }}
+              >
+                {title}
+              </Typography>
+            }
             className={styles.todoTitle}
           />
           <Box
@@ -187,7 +197,16 @@ const Todo = (props: { data: ITodo }) => {
               pl: '16px',
             }}
           >
-            <Typography>{category.name || 'Uncategorized'}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: '12px',
+                  md: '14px',
+                },
+              }}
+            >
+              {category.name || 'Uncategorized'}
+            </Typography>
           </Box>
           <Box
             sx={{
