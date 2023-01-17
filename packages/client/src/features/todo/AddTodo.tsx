@@ -86,7 +86,13 @@ const AddTodo = () => {
       <Box>
         <TextField
           placeholder="Let's do something today..."
-          sx={{ width: '80%' }}
+          //sx={{ width: '80%' }}
+          sx={{
+            width: {
+              xs: '65%',
+              md: '80%',
+            },
+          }}
           autoComplete='off'
           value={todoTitle}
           onChange={handleChange}
@@ -101,7 +107,7 @@ const AddTodo = () => {
           onClick={handleAdd}
           disabled={response.status === 'pending'}
         >
-          Add
+          Add Todo
         </Button>
       </Box>
       <Box>
