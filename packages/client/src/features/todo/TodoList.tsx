@@ -6,6 +6,7 @@ import Todo from './Todo';
 import { useGetTodosQuery } from './todoApi';
 import { receivedTodos } from './todoSlice';
 import { ITodo } from './interfaces';
+import { Box } from '@mui/system';
 
 const TodoList = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,14 @@ const TodoList = () => {
       <Alert severity='error' sx={{ mt: '8px' }}>
         <AlertTitle>Error fetching todos</AlertTitle>
         Please try again or contact the administrator
+      </Alert>
+    );
+  }
+
+  if (todos.length === 0) {
+    return (
+      <Alert severity='info'>
+        No to-do's found! Seems like you've cleared the whole list! 🔥🔥🔥
       </Alert>
     );
   }
