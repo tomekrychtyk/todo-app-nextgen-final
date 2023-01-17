@@ -9,7 +9,19 @@ import { receivedTodos } from './todoSlice';
 const TodoList = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading, isUninitialized, isError } = useGetTodosQuery();
-  const todos = useAppSelector((state) => state.todos.items);
+  const todos = useAppSelector((state) => {
+    if (state.categories.selectedFilter === 'uncategorized') {
+      return state.todos.items.filter(
+        (item) => item.category.name === '' || !item.category._id
+      );
+    } else if (state.categories.selectedFilter) {
+      return state.todos.items.filter(
+        (item) => item.category._id === state.categories.selectedFilter
+      );
+    }
+
+    return state.todos.items;
+  });
 
   useEffect(() => {
     if (data) {

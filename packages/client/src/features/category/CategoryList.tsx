@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { getCategoriesSummary } from '../category/categorySlice';
-import { receivedCategories } from './categorySlice';
+import { receivedCategories, setSelectedCategoryFilter } from './categorySlice';
 import { useGetCategoriesQuery } from './categoryApi';
 import CategoryItem from './CategoryItem';
 import AddCategory from './AddCategory';
@@ -18,8 +18,27 @@ import Loading from '@/components/Loading/Loading';
 
 const CategoryList = () => {
   const dispatch = useAppDispatch();
+  const [selectedFilter, setSelectedFilter] = useState('');
   const { data, isLoading, isUninitialized, isError } = useGetCategoriesQuery();
   const summary = useAppSelector(getCategoriesSummary);
+
+  const handleFilterSelect = (_id: string) => {
+    let filter = '';
+    setSelectedFilter((prev) => {
+      if (prev === _id) {
+        return '';
+      } else {
+        filter = _id;
+      }
+      return _id;
+    });
+
+    dispatch(
+      setSelectedCategoryFilter({
+        _id: filter,
+      })
+    );
+  };
 
   useEffect(() => {
     if (data) {
@@ -66,11 +85,12 @@ const CategoryList = () => {
             {Object.entries(summary).map((item) => {
               const [id, cat] = item;
               return (
-                <CategoryItem key={id}>
-                  <>
-                    {cat.name} ({cat.counter})
-                  </>
-                </CategoryItem>
+                <CategoryItem
+                  key={id}
+                  category={{ ...cat, _id: id }}
+                  selectedFilter={selectedFilter}
+                  onFilterSelect={handleFilterSelect}
+                />
               );
             })}
             <AddCategory />

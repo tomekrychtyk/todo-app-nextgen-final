@@ -8,4 +8,5 @@ export interface ICategoryInput {
 
 export interface ICategoriesState {
   items: ICategory[];
+  selectedFilter: string;
 }

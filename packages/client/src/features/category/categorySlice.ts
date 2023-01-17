@@ -4,6 +4,7 @@ import { ICategoriesState, ICategory } from './interfaces';
 
 const initialState: ICategoriesState = {
   items: [],
+  selectedFilter: '',
 };
 
 const categorySlice = createSlice({
@@ -27,6 +28,13 @@ const categorySlice = createSlice({
           category._id = _id;
         }
       });
+    },
+
+    setSelectedCategoryFilter(
+      state,
+      { payload }: PayloadAction<{ _id: string }>
+    ) {
+      state.selectedFilter = payload._id;
     },
   },
 });
@@ -71,6 +79,10 @@ export const getCategoriesSummary = createSelector(
   }
 );
 
-export const { receivedCategories, addCategory, updateId } =
-  categorySlice.actions;
+export const {
+  receivedCategories,
+  addCategory,
+  updateId,
+  setSelectedCategoryFilter,
+} = categorySlice.actions;
 export default categorySlice.reducer;
