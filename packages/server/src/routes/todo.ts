@@ -34,7 +34,7 @@ export const editTodo = async (req: Request, res: Response) => {
       { _id },
       {
         title,
-        project,
+        project: project || null,
       }
     );
 
