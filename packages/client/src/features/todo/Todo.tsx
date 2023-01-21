@@ -11,6 +11,8 @@ import {
   MenuItem,
   Fade,
   TextField,
+  Select,
+  InputLabel,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -42,7 +44,7 @@ const getAvailableStatuses = (currentStatus: TodoStatus) => {
 
 const Todo = (props: { data: ITodo }) => {
   const {
-    data: { _id, title, status, category },
+    data: { _id, title, status, category, project },
   } = props;
 
   const dispatch = useAppDispatch();
@@ -136,10 +138,20 @@ const Todo = (props: { data: ITodo }) => {
           <TextField
             value={currentlyEditedTitle}
             onChange={(e) => setCurrentlyEditedTitle(e.target.value)}
-            sx={{ width: '100%' }}
+            sx={{ width: '85%' }}
             autoFocus
             onKeyDown={(e) => handleKeyboardEdit(e, _id)}
           />
+          <Select
+            sx={{
+              ml: '8px',
+            }}
+            labelId='category-select-label'
+            id='category-select'
+            value='no-project'
+          >
+            <MenuItem value='no-project'>No project</MenuItem>
+          </Select>
           <Box className={styles.iconsContainer}>
             <IconButton
               edge='end'
@@ -175,6 +187,7 @@ const Todo = (props: { data: ITodo }) => {
                 {title}
               </Typography>
             }
+            secondary={project?.name || ''}
             className={styles.todoTitle}
           />
           <Box

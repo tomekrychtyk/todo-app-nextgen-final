@@ -15,6 +15,21 @@ const projectSlice = createSlice({
     receivedProjects(state, action: PayloadAction<IProject[]>) {
       state.items = action.payload;
     },
+
+    addProject(state, { payload: { _id, name } }: PayloadAction<IProject>) {
+      state.items = [...state.items, { _id, name }];
+    },
+
+    updateId(
+      state,
+      { payload: { _id, tmpId } }: PayloadAction<{ _id: string; tmpId: string }>
+    ) {
+      state.items.forEach((project) => {
+        if (project._id === tmpId) {
+          project._id = _id;
+        }
+      });
+    },
   },
 });
 
@@ -54,5 +69,5 @@ export const getProjectsSummary = createSelector(
   }
 );
 
-export const { receivedProjects } = projectSlice.actions;
+export const { receivedProjects, addProject } = projectSlice.actions;
 export default projectSlice.reducer;
