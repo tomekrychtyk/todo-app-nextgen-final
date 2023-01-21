@@ -16,6 +16,8 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.2",
     "classnames": "^2.3.2",
