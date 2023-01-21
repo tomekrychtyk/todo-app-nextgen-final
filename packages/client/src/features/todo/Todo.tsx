@@ -169,9 +169,9 @@ const Todo = (props: { data: ITodo }) => {
           <Select
             sx={{
               ml: '8px',
+              maxWidth: '150px',
             }}
-            labelId='category-select-label'
-            id='category-select'
+            id='project-select'
             value={valueForProjectSelect}
             onChange={handleProjectSelect}
           >

@@ -36,7 +36,10 @@ const projectSlice = createSlice({
 export const getProjectsSummary = createSelector(
   (state: RootState) => state,
   (state) => {
-    const summary: Record<string, { name: string; rundown?: TodoRundown }> = {};
+    const summary: Record<
+      string,
+      { name: string; rundown?: { [key: string]: number | undefined } }
+    > = {};
 
     state.projects.items.forEach((project) => {
       summary[project._id] = {
@@ -47,25 +50,45 @@ export const getProjectsSummary = createSelector(
     for (const todo of state.todos.items) {
       const project = todo.project;
       if (project) {
-        if (summary[project._id] && summary[project._id].rundown) {
-          let total = summary[project._id].rundown?.[todo.status];
-          if (total) {
-            total += 1;
+        const projectSummary = summary[project._id];
+        if (projectSummary) {
+          const projectSummaryRundown = projectSummary.rundown;
+          if (projectSummaryRundown) {
+            if (projectSummaryRundown[todo.status]) {
+              projectSummaryRundown[todo.status] =
+                (projectSummaryRundown[todo.status] || 0) + 1;
+            } else {
+              projectSummaryRundown[todo.status] = 1;
+            }
           } else {
-            total = 1;
-          }
-          summary[project._id].rundown = {
-            [todo.status]: total,
-          };
-        } else {
-          if (summary[project._id]) {
-            summary[project._id].rundown = {
+            projectSummary.rundown = {
               [todo.status]: 1,
             };
           }
         }
       }
     }
+
+    Object.entries(summary).forEach((item) => {
+      const [id, summaryItem] = item;
+      if (summaryItem.rundown) {
+        let totalDone = 0;
+        let total = 0;
+        for (let status in summaryItem.rundown) {
+          if (status === 'DONE') {
+            totalDone += summaryItem.rundown[status] || 0;
+          }
+          total += summaryItem.rundown[status] || 0;
+        }
+        summaryItem.rundown.totalDone = totalDone;
+        summaryItem.rundown.total = total;
+        if (total) {
+          summaryItem.rundown.donePercent = (totalDone * 100) / total;
+          summaryItem.rundown.todoPercent =
+            100 - summaryItem.rundown.donePercent;
+        }
+      }
+    });
 
     return summary;
   }

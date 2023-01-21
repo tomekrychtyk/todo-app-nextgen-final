@@ -29,7 +29,6 @@ const AddAdvancedOptions = ({ onCategorySelect, selectedCategory }: Props) => {
 
   return (
     <Box>
-      <InputLabel id='category-select-label'>Select category</InputLabel>
       <Select
         sx={{
           mt: '8px',

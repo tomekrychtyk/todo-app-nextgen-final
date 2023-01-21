@@ -21,7 +21,9 @@ type Props = {
   project: {
     _id: string;
     name: string;
-    rundown?: TodoRundown;
+    rundown?: {
+      [key: string]: number;
+    };
   };
 };
 
@@ -39,7 +41,13 @@ const ProjectItem = ({ project }: Props) => {
       {project.rundown ? (
         <ResponsiveBar
           reverse
-          data={data}
+          data={[
+            {
+              project: project.name,
+              done: project.rundown.donePercent,
+              todo: project.rundown.todoPercent,
+            },
+          ]}
           keys={['todo', 'done']}
           layout='horizontal'
           indexBy='project'
