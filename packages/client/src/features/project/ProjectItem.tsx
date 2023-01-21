@@ -7,22 +7,13 @@ import {
   ListItem,
 } from '@mui/material';
 import { ResponsiveBar } from '@nivo/bar';
-import { TodoRundown } from '../todo/interfaces';
-
-const data = [
-  {
-    project: 'Node internals',
-    done: 0,
-    todo: 100,
-  },
-];
 
 type Props = {
   project: {
     _id: string;
     name: string;
     rundown?: {
-      [key: string]: number;
+      [key: string]: number | undefined;
     };
   };
 };
@@ -40,21 +31,21 @@ const ProjectItem = ({ project }: Props) => {
       <Typography>{project.name}</Typography>
       {project.rundown ? (
         <ResponsiveBar
-          reverse
           data={[
             {
               project: project.name,
-              done: project.rundown.donePercent,
-              todo: project.rundown.todoPercent,
+              todo: project.rundown.todoPercent || 0,
+              inProgress: project.rundown.inProgressPercent || 0,
+              done: project.rundown.donePercent || 0,
             },
           ]}
-          keys={['todo', 'done']}
+          keys={['done', 'inProgress', 'todo']}
           layout='horizontal'
           indexBy='project'
           padding={0.3}
           valueScale={{ type: 'linear' }}
           indexScale={{ type: 'band', round: true }}
-          colors={['gray', 'yellowgreen']}
+          colors={['yellowgreen', 'blueviolet', 'gray']}
           colorBy='id'
           axisTop={null}
           axisRight={null}

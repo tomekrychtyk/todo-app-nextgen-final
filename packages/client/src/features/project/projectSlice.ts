@@ -73,19 +73,49 @@ export const getProjectsSummary = createSelector(
       const [id, summaryItem] = item;
       if (summaryItem.rundown) {
         let totalDone = 0;
+        let totalInProgress = 0;
+        let totalTodo = 0;
         let total = 0;
         for (let status in summaryItem.rundown) {
           if (status === 'DONE') {
             totalDone += summaryItem.rundown[status] || 0;
+          } else if (status === 'IN PROGRESS') {
+            totalInProgress += summaryItem.rundown[status] || 0;
+          } else {
+            totalTodo += summaryItem.rundown[status] || 0;
           }
           total += summaryItem.rundown[status] || 0;
         }
+
+        summaryItem.rundown.totalTodo = totalTodo;
         summaryItem.rundown.totalDone = totalDone;
+        summaryItem.rundown.totalInProgress = totalInProgress;
         summaryItem.rundown.total = total;
+
         if (total) {
-          summaryItem.rundown.donePercent = (totalDone * 100) / total;
-          summaryItem.rundown.todoPercent =
-            100 - summaryItem.rundown.donePercent;
+          summaryItem.rundown.donePercent = Math.floor(
+            (totalDone * 100) / total
+          );
+          summaryItem.rundown.inProgressPercent = Math.floor(
+            (totalInProgress * 100) / total
+          );
+          summaryItem.rundown.todoPercent = Math.floor(
+            (totalTodo * 100) / total
+          );
+        }
+
+        const sum: number =
+          (summaryItem.rundown.donePercent || 0) +
+          (summaryItem.rundown.inProgressPercent || 0) +
+          (summaryItem.rundown.todoPercent || 0);
+
+        const diff = 100 - sum;
+        if (diff > 0 && summaryItem.rundown.donePercent) {
+          summaryItem.rundown.donePercent += diff;
+        } else if (diff > 0 && summaryItem.rundown.inProgressPercent) {
+          summaryItem.rundown.inProgressPercent += diff;
+        } else if (diff > 0 && summaryItem.rundown.todoPercent) {
+          summaryItem.rundown.todoPercent += diff;
         }
       }
     });
