@@ -12,13 +12,13 @@ import {
   Fade,
   TextField,
   Select,
-  InputLabel,
+  SelectChangeEvent,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { getStatusBackground } from '@/utils/todo';
 import { ITodo, TodoStatus } from '../todo/interfaces';
 import { removeTodo, editTodo, setStatus } from './todoSlice';
@@ -28,6 +28,7 @@ import {
   useUpdateStatusMutation,
 } from './todoApi';
 import styles from './Todo.module.css';
+import { IProject } from '../project/interfaces';
 
 const getAvailableStatuses = (currentStatus: TodoStatus) => {
   const statuses = [TodoStatus.toDo, TodoStatus.inProgress, TodoStatus.done];
@@ -51,23 +52,33 @@ const Todo = (props: { data: ITodo }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
+  const [selectedProject, setSelectedProject] = useState<IProject | null>(null);
   const [deleteTodo] = useDeleteTodoMutation();
   const [apiEditTodo] = useEditTodoMutation();
   const [apiUpdateStatus] = useUpdateStatusMutation();
+  const projects = useAppSelector((state) => state.projects.items);
 
   const open = Boolean(anchorEl);
+
+  const handleProjectSelect = (e: SelectChangeEvent<string>) => {
+    const project = projects.find((item) => item._id === e.target.value);
+    setSelectedProject(project || null);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  const handleStatusClose = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => {
     setAnchorEl(null);
   };
 
   const handleEditCancel = (originalTitle: string) => {
     setCurrentlyEdited(null);
     setCurrentlyEditedTitle(originalTitle);
+    setSelectedProject(null);
   };
 
   const handleRemove = (_id: string) => {
@@ -97,6 +108,7 @@ const Todo = (props: { data: ITodo }) => {
     apiEditTodo({
       _id,
       title: currentlyEditedTitle,
+      project: selectedProject,
     })
       .then(() => {
         console.log('Successfully edited todo');
@@ -148,9 +160,15 @@ const Todo = (props: { data: ITodo }) => {
             }}
             labelId='category-select-label'
             id='category-select'
-            value='no-project'
+            value={project?._id || selectedProject?._id || 'no-project'}
+            onChange={handleProjectSelect}
           >
             <MenuItem value='no-project'>No project</MenuItem>
+            {projects.map((project) => (
+              <MenuItem key={project._id} value={project._id}>
+                {project.name}
+              </MenuItem>
+            ))}
           </Select>
           <Box className={styles.iconsContainer}>
             <IconButton
@@ -229,12 +247,12 @@ const Todo = (props: { data: ITodo }) => {
               }}
               anchorEl={anchorEl}
               open={open}
-              onClose={handleClose}
+              onClose={handleStatusClose}
               TransitionComponent={Fade}
             >
               {getAvailableStatuses(status).map((item) => {
                 return (
-                  <MenuItem onClick={handleClose} key={item}>
+                  <MenuItem onClick={handleStatusClose} key={item}>
                     <Chip
                       label={item}
                       sx={{ backgroundColor: getStatusBackground(item) }}

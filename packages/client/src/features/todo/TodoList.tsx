@@ -6,7 +6,6 @@ import Todo from './Todo';
 import { useGetTodosQuery } from './todoApi';
 import { receivedTodos } from './todoSlice';
 import { ITodo } from './interfaces';
-import { Box } from '@mui/system';
 
 const TodoList = () => {
   const dispatch = useAppDispatch();

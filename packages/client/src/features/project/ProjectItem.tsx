@@ -26,7 +26,6 @@ type Props = {
 };
 
 const ProjectItem = ({ project }: Props) => {
-  console.log(project);
   return (
     <ListItem
       sx={{

@@ -22,7 +22,7 @@ export const todoSchema = new Schema(
     category: { name: String, _id: String },
     project: {
       name: String,
-      id: String,
+      _id: String,
     },
   },
   {

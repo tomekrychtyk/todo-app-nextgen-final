@@ -48,8 +48,6 @@ const ProjectList = () => {
     );
   }
 
-  console.log(summary);
-
   return (
     <Paper
       sx={{
