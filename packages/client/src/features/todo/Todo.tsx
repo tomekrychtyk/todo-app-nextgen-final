@@ -217,7 +217,20 @@ const Todo = (props: { data: ITodo }) => {
                 {title}
               </Typography>
             }
-            secondary={project?.name || ''}
+            // secondary={project?.name || ''}
+            secondary={
+              <Typography
+                sx={{
+                  color: '#888',
+                  fontSize: {
+                    md: '14px',
+                    xs: '12px',
+                  },
+                }}
+              >
+                {project?.name || ''}
+              </Typography>
+            }
             className={styles.todoTitle}
           />
           <Box

@@ -5,6 +5,7 @@ import {
   Typography,
   List,
   ListItem,
+  Box,
 } from '@mui/material';
 import { ResponsiveBar } from '@nivo/bar';
 
