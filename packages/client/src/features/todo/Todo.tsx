@@ -217,7 +217,6 @@ const Todo = (props: { data: ITodo }) => {
                 {title}
               </Typography>
             }
-            // secondary={project?.name || ''}
             secondary={
               <Typography
                 sx={{
@@ -263,7 +262,15 @@ const Todo = (props: { data: ITodo }) => {
               }}
               onClick={handleClick}
             >
-              {status}
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '10px',
+                  },
+                }}
+              >
+                {status}
+              </Typography>
             </Button>
             <Menu
               id='fade-menu'
@@ -280,7 +287,9 @@ const Todo = (props: { data: ITodo }) => {
                   <MenuItem onClick={handleStatusClose} key={item}>
                     <Chip
                       label={item}
-                      sx={{ backgroundColor: getStatusBackground(item) }}
+                      sx={{
+                        backgroundColor: getStatusBackground(item),
+                      }}
                       onClick={() => handleUpdateStatus(_id, item)}
                       className={styles.statusButton}
                     />
