@@ -209,7 +209,7 @@ const Todo = (props: { data: ITodo }) => {
               <Typography
                 sx={{
                   fontSize: {
-                    xs: '14px',
+                    xs: '12px',
                     md: '16px',
                   },
                 }}
