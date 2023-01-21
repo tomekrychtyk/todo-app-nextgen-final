@@ -7,6 +7,7 @@ import {
   ListItem,
 } from '@mui/material';
 import { ResponsiveBar } from '@nivo/bar';
+import { TodoRundown } from '../todo/interfaces';
 
 const data = [
   {
@@ -16,7 +17,16 @@ const data = [
   },
 ];
 
-const ProjectItem = () => {
+type Props = {
+  project: {
+    _id: string;
+    name: string;
+    rundown?: TodoRundown;
+  };
+};
+
+const ProjectItem = ({ project }: Props) => {
+  console.log(project);
   return (
     <ListItem
       sx={{
@@ -26,8 +36,8 @@ const ProjectItem = () => {
         mb: '16px',
       }}
     >
-      <Typography>Advanced Node.js</Typography>
-      {false ? (
+      <Typography>{project.name}</Typography>
+      {project.rundown ? (
         <ResponsiveBar
           reverse
           data={data}

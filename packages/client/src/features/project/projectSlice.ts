@@ -1,12 +1,7 @@
 import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { IProject, IProjectsState } from './interfaces';
-
-type TodoRundown = {
-  ['TO DO']?: number;
-  DONE?: number;
-  ['IN PROGRESS']?: number;
-};
+import { TodoRundown } from '../todo/interfaces';
 
 const initialState: IProjectsState = {
   items: [],

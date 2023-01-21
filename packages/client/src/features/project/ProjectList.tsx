@@ -48,6 +48,8 @@ const ProjectList = () => {
     );
   }
 
+  console.log(summary);
+
   return (
     <Paper
       sx={{
@@ -62,7 +64,10 @@ const ProjectList = () => {
         <CardContent sx={{ textAlign: 'center' }}>
           <Typography variant='h5'>PROJECTS</Typography>
           <List sx={{ pb: '32px' }}>
-            <ProjectItem />
+            {Object.entries(summary).map((item) => {
+              const [id, project] = item;
+              return <ProjectItem project={{ ...project, _id: id }} key={id} />;
+            })}
           </List>
           <AddProject />
         </CardContent>

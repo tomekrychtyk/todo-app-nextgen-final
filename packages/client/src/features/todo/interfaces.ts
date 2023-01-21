@@ -21,3 +21,9 @@ export interface ITodosState {
   items: ITodo[];
   selectedStatus: string;
 }
+
+export type TodoRundown = {
+  ['TO DO']?: number;
+  DONE?: number;
+  ['IN PROGRESS']?: number;
+};
