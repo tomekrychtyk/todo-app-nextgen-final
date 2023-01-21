@@ -266,6 +266,7 @@ const Todo = (props: { data: ITodo }) => {
                 sx={{
                   fontSize: {
                     xs: '10px',
+                    md: '14px',
                   },
                 }}
               >

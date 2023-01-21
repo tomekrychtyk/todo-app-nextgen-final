@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Button, TextField, Box } from '@mui/material';
 import { useAddNewProjectMutation } from './projectApi';
-import { addProject } from './projectSlice';
+import { addProject, updateId } from './projectSlice';
 import { useAppDispatch } from '@/app/hooks';
 
 const AddProject = () => {
@@ -44,6 +44,12 @@ const AddProject = () => {
       .unwrap()
       .then((createdProject) => {
         setAddInProgress(false);
+        dispatch(
+          updateId({
+            tmpId,
+            _id: createdProject._id,
+          })
+        );
       })
       .catch((error) => {
         console.log('Error saving new category', error);

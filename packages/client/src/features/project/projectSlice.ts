@@ -124,5 +124,5 @@ export const getProjectsSummary = createSelector(
   }
 );
 
-export const { receivedProjects, addProject } = projectSlice.actions;
+export const { receivedProjects, addProject, updateId } = projectSlice.actions;
 export default projectSlice.reducer;
