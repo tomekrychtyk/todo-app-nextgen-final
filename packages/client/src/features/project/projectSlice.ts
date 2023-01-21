@@ -58,9 +58,11 @@ export const getProjectsSummary = createSelector(
             [todo.status]: total,
           };
         } else {
-          summary[project._id].rundown = {
-            [todo.status]: 1,
-          };
+          if (summary[project._id]) {
+            summary[project._id].rundown = {
+              [todo.status]: 1,
+            };
+          }
         }
       }
     }

@@ -31,7 +31,7 @@ export const todosApi = apiSlice.injectEndpoints({
     }),
     editTodo: builder.mutation<
       ITodo,
-      { _id: string; title: string; project: IProject | null }
+      { _id: string; title: string; project: IProject | undefined }
     >({
       query: ({
         _id,
@@ -40,7 +40,7 @@ export const todosApi = apiSlice.injectEndpoints({
       }: {
         _id: string;
         title: string;
-        project: IProject | null;
+        project: IProject | undefined;
       }) => ({
         url: 'todo',
         method: 'PATCH',

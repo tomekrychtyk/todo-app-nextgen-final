@@ -13,6 +13,7 @@ import {
   TextField,
   Select,
   SelectChangeEvent,
+  InputLabel,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -52,7 +53,8 @@ const Todo = (props: { data: ITodo }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
-  const [selectedProject, setSelectedProject] = useState<IProject | null>(null);
+  const [selectedProject, setSelectedProject] = useState<IProject>();
+  const [isProjectSelectDirty, setIsProjectSelectDirty] = useState(false);
   const [deleteTodo] = useDeleteTodoMutation();
   const [apiEditTodo] = useEditTodoMutation();
   const [apiUpdateStatus] = useUpdateStatusMutation();
@@ -62,7 +64,8 @@ const Todo = (props: { data: ITodo }) => {
 
   const handleProjectSelect = (e: SelectChangeEvent<string>) => {
     const project = projects.find((item) => item._id === e.target.value);
-    setSelectedProject(project || null);
+    setSelectedProject(project);
+    setIsProjectSelectDirty(true);
   };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -78,7 +81,11 @@ const Todo = (props: { data: ITodo }) => {
   const handleEditCancel = (originalTitle: string) => {
     setCurrentlyEdited(null);
     setCurrentlyEditedTitle(originalTitle);
-    setSelectedProject(null);
+    setIsProjectSelectDirty(false);
+    setSelectedProject({
+      _id: 'no-project',
+      name: 'No project',
+    });
   };
 
   const handleRemove = (_id: string) => {
@@ -102,6 +109,7 @@ const Todo = (props: { data: ITodo }) => {
       editTodo({
         _id,
         title: currentlyEditedTitle,
+        project: selectedProject,
       })
     );
 
@@ -140,6 +148,10 @@ const Todo = (props: { data: ITodo }) => {
     }
   };
 
+  const valueForProjectSelect = isProjectSelectDirty
+    ? selectedProject?._id || 'no-project'
+    : project?._id || 'no-project';
+
   return (
     <ListItem
       className={styles.todoContainer}
@@ -160,7 +172,7 @@ const Todo = (props: { data: ITodo }) => {
             }}
             labelId='category-select-label'
             id='category-select'
-            value={project?._id || selectedProject?._id || 'no-project'}
+            value={valueForProjectSelect}
             onChange={handleProjectSelect}
           >
             <MenuItem value='no-project'>No project</MenuItem>
