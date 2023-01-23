@@ -49,7 +49,7 @@ export const getCategoriesSummary = createSelector(
       },
     };
 
-    state.categories.items.forEach((category) => {
+    Object.entries(state.categories.items).forEach(([_, category]) => {
       summary[category._id] = {
         name: category.name,
         counter: 0,

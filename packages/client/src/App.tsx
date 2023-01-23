@@ -2,7 +2,6 @@ import { createTheme, ThemeProvider, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TodoList from './features/todo/TodoList';
 import CategoryList from './features/category/CategoryList';
-import ProjectList from './features/project/ProjectList';
 import AddTodo from './features/todo/AddTodo';
 import StatusList from './features/status/StatusList';
 
@@ -38,7 +37,6 @@ function App() {
         </Grid>
         <Grid item xl={3} xs={12}>
           <StatusList />
-          <ProjectList />
           <CategoryList />
         </Grid>
         <Grid item xl={1} xs={12} />

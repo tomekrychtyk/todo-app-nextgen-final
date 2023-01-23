@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Todo } from '../model/todo/Todo';
-import { Project } from '../model/project/Project';
 
 export const getTodos = async (_: Request, res: Response) => {
   try {
@@ -23,18 +22,13 @@ export const createTodo = async (req: Request, res: Response) => {
 };
 
 export const editTodo = async (req: Request, res: Response) => {
-  const { _id, title, project } = req.body as {
-    _id: string;
-    title: string;
-    project: typeof Project;
-  };
+  const { _id, title } = req.body as { _id: string; title: string };
 
   try {
     await Todo.findOneAndUpdate(
       { _id },
       {
         title,
-        project: project || null,
       }
     );
 

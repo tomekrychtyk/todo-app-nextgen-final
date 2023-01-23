@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { categoryRoutes, todoRoutes, projectRoutes } from './src/routes';
+import { categoryRoutes } from './src/routes';
+import { todoRoutes } from './src/routes';
 
 dotenv.config();
 
@@ -35,9 +36,6 @@ app.patch('/todo/status', todoRoutes.updateStatus);
 
 app.get('/category', categoryRoutes.getCategories);
 app.post('/category', categoryRoutes.createCategory);
-
-app.get('/project', projectRoutes.getProjects);
-app.post('/project', projectRoutes.createProject);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

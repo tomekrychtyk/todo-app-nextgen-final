@@ -1,4 +1,3 @@
-import { IProject } from '../project/interfaces';
 import { ITodo, TodoInput, TodoStatus } from './interfaces';
 import { apiSlice } from '@/app/api';
 
@@ -29,22 +28,11 @@ export const todosApi = apiSlice.injectEndpoints({
         },
       }),
     }),
-    editTodo: builder.mutation<
-      ITodo,
-      { _id: string; title: string; project: IProject | undefined }
-    >({
-      query: ({
-        _id,
-        title,
-        project,
-      }: {
-        _id: string;
-        title: string;
-        project: IProject | undefined;
-      }) => ({
+    editTodo: builder.mutation<ITodo, { _id: string; title: string }>({
+      query: ({ _id, title }: { _id: string; title: string }) => ({
         url: 'todo',
         method: 'PATCH',
-        body: { _id, title, project },
+        body: { _id, title },
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },

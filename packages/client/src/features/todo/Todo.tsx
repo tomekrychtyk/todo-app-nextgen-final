@@ -11,15 +11,12 @@ import {
   MenuItem,
   Fade,
   TextField,
-  Select,
-  SelectChangeEvent,
-  InputLabel,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useAppDispatch } from '@/app/hooks';
 import { getStatusBackground } from '@/utils/todo';
 import { ITodo, TodoStatus } from '../todo/interfaces';
 import { removeTodo, editTodo, setStatus } from './todoSlice';
@@ -29,7 +26,6 @@ import {
   useUpdateStatusMutation,
 } from './todoApi';
 import styles from './Todo.module.css';
-import { IProject } from '../project/interfaces';
 
 const getAvailableStatuses = (currentStatus: TodoStatus) => {
   const statuses = [TodoStatus.toDo, TodoStatus.inProgress, TodoStatus.done];
@@ -46,46 +42,30 @@ const getAvailableStatuses = (currentStatus: TodoStatus) => {
 
 const Todo = (props: { data: ITodo }) => {
   const {
-    data: { _id, title, status, category, project },
+    data: { _id, title, status, category },
   } = props;
 
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentlyEdited, setCurrentlyEdited] = useState<null | string>(null);
   const [currentlyEditedTitle, setCurrentlyEditedTitle] = useState(title);
-  const [selectedProject, setSelectedProject] = useState<IProject>();
-  const [isProjectSelectDirty, setIsProjectSelectDirty] = useState(false);
   const [deleteTodo] = useDeleteTodoMutation();
   const [apiEditTodo] = useEditTodoMutation();
   const [apiUpdateStatus] = useUpdateStatusMutation();
-  const projects = useAppSelector((state) => state.projects.items);
 
   const open = Boolean(anchorEl);
-
-  const handleProjectSelect = (e: SelectChangeEvent<string>) => {
-    const project = projects.find((item) => item._id === e.target.value);
-    setSelectedProject(project);
-    setIsProjectSelectDirty(true);
-  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleStatusClose = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
+  const handleClose = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     setAnchorEl(null);
   };
 
   const handleEditCancel = (originalTitle: string) => {
     setCurrentlyEdited(null);
     setCurrentlyEditedTitle(originalTitle);
-    setIsProjectSelectDirty(false);
-    setSelectedProject({
-      _id: 'no-project',
-      name: 'No project',
-    });
   };
 
   const handleRemove = (_id: string) => {
@@ -109,14 +89,12 @@ const Todo = (props: { data: ITodo }) => {
       editTodo({
         _id,
         title: currentlyEditedTitle,
-        project: selectedProject,
       })
     );
 
     apiEditTodo({
       _id,
       title: currentlyEditedTitle,
-      project: selectedProject,
     })
       .then(() => {
         console.log('Successfully edited todo');
@@ -148,10 +126,6 @@ const Todo = (props: { data: ITodo }) => {
     }
   };
 
-  const valueForProjectSelect = isProjectSelectDirty
-    ? selectedProject?._id || 'no-project'
-    : project?._id || 'no-project';
-
   return (
     <ListItem
       className={styles.todoContainer}
@@ -162,26 +136,10 @@ const Todo = (props: { data: ITodo }) => {
           <TextField
             value={currentlyEditedTitle}
             onChange={(e) => setCurrentlyEditedTitle(e.target.value)}
-            sx={{ width: '85%' }}
+            sx={{ width: '100%' }}
             autoFocus
             onKeyDown={(e) => handleKeyboardEdit(e, _id)}
           />
-          <Select
-            sx={{
-              ml: '8px',
-              maxWidth: '150px',
-            }}
-            id='project-select'
-            value={valueForProjectSelect}
-            onChange={handleProjectSelect}
-          >
-            <MenuItem value='no-project'>No project</MenuItem>
-            {projects.map((project) => (
-              <MenuItem key={project._id} value={project._id}>
-                {project.name}
-              </MenuItem>
-            ))}
-          </Select>
           <Box className={styles.iconsContainer}>
             <IconButton
               edge='end'
@@ -209,25 +167,12 @@ const Todo = (props: { data: ITodo }) => {
               <Typography
                 sx={{
                   fontSize: {
-                    xs: '12px',
+                    xs: '14px',
                     md: '16px',
                   },
                 }}
               >
                 {title}
-              </Typography>
-            }
-            secondary={
-              <Typography
-                sx={{
-                  color: '#888',
-                  fontSize: {
-                    md: '14px',
-                    xs: '12px',
-                  },
-                }}
-              >
-                {project?.name || ''}
               </Typography>
             }
             className={styles.todoTitle}
@@ -262,16 +207,7 @@ const Todo = (props: { data: ITodo }) => {
               }}
               onClick={handleClick}
             >
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: '10px',
-                    md: '14px',
-                  },
-                }}
-              >
-                {status}
-              </Typography>
+              {status}
             </Button>
             <Menu
               id='fade-menu'
@@ -280,17 +216,15 @@ const Todo = (props: { data: ITodo }) => {
               }}
               anchorEl={anchorEl}
               open={open}
-              onClose={handleStatusClose}
+              onClose={handleClose}
               TransitionComponent={Fade}
             >
               {getAvailableStatuses(status).map((item) => {
                 return (
-                  <MenuItem onClick={handleStatusClose} key={item}>
+                  <MenuItem onClick={handleClose} key={item}>
                     <Chip
                       label={item}
-                      sx={{
-                        backgroundColor: getStatusBackground(item),
-                      }}
+                      sx={{ backgroundColor: getStatusBackground(item) }}
                       onClick={() => handleUpdateStatus(_id, item)}
                       className={styles.statusButton}
                     />

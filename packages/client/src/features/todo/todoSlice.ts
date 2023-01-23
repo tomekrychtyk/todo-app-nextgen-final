@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ITodo, ITodosState, TodoStatus } from './interfaces';
-import { IProject } from '../project/interfaces';
 
 const initialState: ITodosState = {
   items: [],
@@ -28,18 +27,11 @@ const todosSlice = createSlice({
 
     editTodo(
       state,
-      {
-        payload: { _id, title, project },
-      }: PayloadAction<{
-        _id: string;
-        title: string;
-        project: IProject | undefined;
-      }>
+      { payload: { _id, title } }: PayloadAction<{ _id: string; title: string }>
     ) {
       state.items.forEach((todo) => {
         if (todo._id === _id) {
           todo.title = title;
-          todo.project = project || undefined;
         }
       });
     },
